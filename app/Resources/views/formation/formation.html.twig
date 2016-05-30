@@ -1,0 +1,105 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h2 class="page-header">Formations choisis (Nombre de Jour de Formation Disponible : {{app.session.get('jf')}} )</h2>
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th>Contenu</th> <th>Date</th> <th>cout</th> <th>duree(en jours)</th> <th>Situation</th> <th></th>
+    </tr>
+    </thead>
+    <tbody>
+        {% for ff in formationChoisi %}
+        <tr>
+            <th scope="row">{{ ff.contenu }}</th>
+            <td>{{ff.date|date('F j, Y, g:i a')}}</td>
+            <td>{{ff.cout}}</td>
+            <td>{{ff.duree}}</td>
+            <td>
+                {% set ap = 0 %}
+                    {% if ff.id in approuve %}
+
+                        {%  set ap = 1 %}
+                    {% endif %}
+
+
+                {% if ap == 0 %}
+                    <a href="/formation/cancel/{{ff.id}}" class="btn btn-warning glyphicon glyphicon-remove-circle"></a>
+                {% else %}
+                    <i class="glyphicon glyphicon-ok"></i>
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+
+</table>
+    <h2 class="page-header">Formations disponibles</h2>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Contenu</th> <th>Date</th> <th>cout</th> <th>duree(en jours)</th> <th>Pre Requis</th> <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for f in formations %}
+
+            <tr> <th scope="row">{{f.contenu}}</th>
+                <td>{{f.date|date('F j, Y, g:i a')}}</td>
+                <td>{{f.cout}}</td>
+                <td>{{f.duree}}</td>
+                <td>{{f.prerequis}}</td>
+                <td>
+                    {% set eff = 0 %}
+                    {% for e in formationChoisi %}
+                        {% if f.id in approuve %}
+                            {%  set eff = 2 %}
+                        {% elseif e.id==f.id %}
+                            {%  set eff = 1 %}
+                            {# break #}
+                        {% endif %}
+                    {% endfor %}
+
+                    {% if eff == 1 %}
+                        demande
+                    {% elseif eff == 2 %}
+                        <i class="glyphicon glyphicon-ok"></i>
+                    {% else %}
+                        <a href="" class="btn btn-primary glyphicon glyphicon-eye-open"></a>
+                        <a href="/formation/choisis/{{f.id}}" class="btn btn-success glyphicon glyphicon-ok-circle"></a>
+                    {% endif %}
+                </td>
+
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <h2 class="page-header">Formations à approuver</h2>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>salarie</th> <th>formation</th> <th>jours restant du salarie</th> <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        {% set i = 0 %}
+        {% for salarie,formation in demandeName %}
+        <tr>
+            <th scope="row">{{ salarie }}</th>
+            <th scope="row">{{ formation.contenu }}</th>
+            <td>Jour restant</td>
+            <th>
+                <a href="/formation/approve/{{ demandeId[i] }}/{{ formation.id }}" class="btn btn-success glyphicon glyphicon-ok-sign"></a>
+                <a href="/formation/deny/{{ demandeId[i] }}/{{ formation.id }}" class="btn btn-danger glyphicon glyphicon-remove-sign"></a>
+            </th>
+        </tr>
+            {% set i = i+1 %}
+        {% endfor %}
+        </tbody>
+
+    </table>
+
+
+
+
+{% endblock %}

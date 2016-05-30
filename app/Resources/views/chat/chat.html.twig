@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<center>
+Enter Chat and press enter(FREE CHAT tous le monde peut parler !)
+<div><input id=input placeholder=you-chat-here /></div>
+</center>
+Chat Output
+<div id=box></div>
+
+<script src=http://cdn.pubnub.com/pubnub.min.js></script>
+<script>
+  var twr = "{{ data[0]|escape('js') }}";
+  var twr1 = "{{ data[1]|escape('js') }}";
+	(function(){
+var box = PUBNUB.$('box'), input = PUBNUB.$('input'), channel = 'chat';
+PUBNUB.subscribe({
+    channel  : channel,
+    callback : function(text) { box.innerHTML = (''+text).replace( /[<>]/g, '' ) + '<br>' + box.innerHTML }
+});
+
+PUBNUB.bind( 'keyup', input, function(e) {
+    (e.keyCode || e.charCode) === 13 && PUBNUB.publish({
+        channel : channel, message : twr+" "+twr1+ " : "+input.value, x : (input.value='')
+    })
+} )
+
+})()</script>
+{% endblock %}

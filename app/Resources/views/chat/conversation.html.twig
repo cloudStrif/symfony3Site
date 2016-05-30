@@ -1,0 +1,119 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {% if chats is defined %}
+    <h1>Convertation</h1>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Nom</th> <th>Creer par</th> <th>Date</th> <th></th>
+        </tr>
+        </thead>
+        <tbody>
+            {% for c in chats %}
+                <tr>
+                    <td><a href="chat/{{ c.id }}">{{ c.nom }}</a></td>
+                    <td>{{ c.iduser }}</td>
+                    <td>{{ c.date|date('F j, Y, g:i a') }}</td>
+                    <td><a href="/chat/remove/{{ c.id }}" class="btn btn-danger glyphicon glyphicon-remove-sign"></a></td>
+                </tr>
+            {% endfor %}
+            <tr>
+                {{form_start(form)}}
+                <td class="text-justify" style="color: rgb(51,152,203);width: 400px;">{{ form_widget(form.nom, {'attr': {'class': 'form-control'}}) }}</td>
+                <td style="color: rgb(51,152,203)">{{ pseudo.nom }} {{ pseudo.prenom }}</td>
+                <td style="color: rgb(51,152,203)">{{ now|date("F jS \\a\\t g:ia")}}</td>
+                {{form_end(form)}}
+            </tr>
+        </tbody>
+        </table>
+        {% endif %}
+
+    {% if messages is defined %}
+        <h1 class="page-header">{{ chatName }}</h1>
+        <div class="row">
+            <div class="col-md-8">
+                <div class="panel panel-success">
+                    <div class="panel-heading">Messages</div>
+                    <div class="panel-body">
+                        <table class="table table-striped">
+                            <tbody>
+                                {% for m in messages %}
+                                <tr>
+                                    <td>{{ m.contenu }}</td>
+                                    <td>{{ m.user }}</td>
+                                </tr>
+                                {% endfor %}
+
+                            <tr>
+                                <td>
+                                {{ form_start(form) }}
+                                {{ form_widget(form.contenu,{'attr': {'class':'form-control' }}) }}
+                                {{ form_end(form) }}
+                                </td>
+                                <td>{{ pseudo }}</td>
+                            </tr>
+                            </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            <div class="col-md-4">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">Participants</div>
+                    <div class="panel-body">
+                        <table class="table table-striped">
+                            <tbody>
+                            {% for p in participants %}
+                                <tr>
+                                    <td>{{ p.nom }} {{ p.prenom}}</td>
+                                </tr>
+                            {% endfor %}
+                            <tr>
+                                <td>
+                                    {{ form_start(form2) }}
+                                    {{ form_widget(form2.nom,{'attr': {'class':'form-control' }}) }}
+                                    {{ form_end(form2) }}
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>
+                    function sendRating(rating, reload_on_return) {
+
+                $.ajax({
+                    type: "POST",
+                    dataType: 'json',
+                    url: window.url_root + cid + "/",
+                    async: false,
+                    data: {
+                        "rating": rating.r2 / 100.0
+                    },
+                    success: function(data) {
+                        if (data.hasOwnProperty('success')) {
+                            console.log("data was sent!");
+
+                            if (reload_on_return) {
+                                setTimeout(
+                                        function()
+                                        {
+                                            location.reload();
+                                        }, 0001);
+                            }
+
+                        }
+                    },
+                    error: function() {
+                        console.log("Data didn't get sent!!");
+                    }
+                })
+        </script>
+
+    {% endif %}
+
+
+{% endblock %}

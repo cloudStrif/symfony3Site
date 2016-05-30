@@ -1,0 +1,127 @@
+<!doctype>
+<html>
+<head>
+	<title>jsPDF</title>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<link rel="stylesheet" type="text/css" href="css/smoothness/jquery-ui-1.8.17.custom.css">
+	<link rel="stylesheet" type="text/css" href="css/main.css">
+
+	<script type="text/javascript" src="js/jquery/jquery-1.7.1.min.js"></script>
+	<script type="text/javascript" src="js/jquery/jquery-ui-1.8.17.custom.min.js"></script>
+	<script type="text/javascript" src="../jspdf.js"></script>
+	<script type="text/javascript" src="../libs/FileSaver.js/FileSaver.js"></script>
+	<script type="text/javascript" src="../libs/BlobBuilder.js/BlobBuilder.js"></script>
+
+	<script type="text/javascript" src="../plugins/addimage.js"></script>
+
+	<script type="text/javascript" src="../plugins/standard_fonts_metrics.js"></script>
+	<script type="text/javascript" src="../plugins/split_text_to_size.js"></script>
+	<script type="text/javascript" src="../plugins/from_html.js"></script>
+	<script type="text/javascript" src="js/basic.js"></script>
+
+	<script>
+		$(function() {
+			$("#accordion-basic, #accordion-text, #accordion-graphic").accordion({
+				autoHeight: false,
+				navigation: true
+			});
+			$( "#tabs" ).tabs();
+			$(".button").button();
+		});
+	</script>
+</head>
+
+<body>
+<center>
+<iframe frameborder="0" width="500" height="400"></iframe>
+</center>
+<script>
+$(document).ready(function() {
+
+
+	var pdf = new jsPDF('p','in','letter')
+	, sizes = [12, 16, 20]
+	, fonts = [ ['Times','Italic']]
+	, font, size, lines
+	, margin = 0.5 // inches on a 8.5 x 11 inch sheet.
+	, verticalOffset = margin
+	, loremipsum = '  ENTREPRISE :BNW FRANCE -ile de france- \n  142 rue Albert Maurice \n  France-Ile de France-75013'
+	+'\n  Etablissement principale : ROCKENCOURT\nPresident directeur general :M.Henri'
+
+	// Margins:
+	pdf.setDrawColor(0, 0, 0)
+		.setLineWidth(1/72)
+		.line(margin, margin, margin, 11 - margin)
+		.line(8.5 - margin, margin, 8.5-margin, 11-margin)
+
+	// the 3 blocks of text
+	pdf.setDrawColor(0,0, 0)
+		.setLineWidth(1/72)
+		.line(0.5, 0.5, 8, 0.5)
+       //Delimitor 
+      /* pdf.setDrawColor(0,0, 0)
+		.setLineWidth(1/72)
+		.line(0.5, 1.3, 3.9, 1.3)
+       pdf.setDrawColor(0,0, 0)
+		.setLineWidth(1/72)
+		.line(3.9, 1.3, 3.9, 0.5)		
+		*/
+		pdf.rect(0.5, 0.5, 3.3, 1);
+		pdf.rect(3.8, 0.5 ,4.2,1);
+		
+		pdf.rect(0.5, 1.5, 7.5, 1);
+       pdf.text(5, 1, 'Fiche de Paie BMW');
+       pdf.text(4.2, 1.3, 'Membre:  ');
+       pdf.text(0.5, 2, 'entre en Entreprise le :');
+        pdf.text(0.5, 2.4, 'Type de contrat :');
+        pdf.text(5, 2.4, 'Durée de contrat :');
+        
+        pdf.rect(0.5, 2.5, 7.5, 5);
+	  pdf.rect(0.5, 2.5,2, 5);
+	    pdf.rect(2.5,2.5,2,5);
+	   pdf.rect(4.5,2.5,2,5);
+	     pdf.text(1.2, 2.8, 'Rubriques:');
+	      pdf.text(0.5, 2.8+1, 'assurance maladie'); 
+	       pdf.text(0.5, 2.8+2, 'assurance chomage'); 
+	          pdf.text(0.5, 2.8+3, 'Taxe apprentissage'); 
+	      pdf.text(3.2, 2.8, 'Taux:');
+	       pdf.text(3.2+2, 2.8, 'A payer:');
+	         pdf.text(3.2+3.5, 2.8, 'Charges:'); 
+	        pdf.text(1, 9, 'Pour un total:');
+	             pdf.text(1, 10, 'Votre salaire Brut:');
+	for (var i in fonts){
+		if (fonts.hasOwnProperty(i)) {
+			font = fonts[i]
+			size = sizes[i]
+
+			lines = pdf.setFont(font[0], font[1])
+						.setFontSize(size)
+						.splitTextToSize(loremipsum, 7.5)
+			// Don't want to preset font, size to calculate the lines?
+			// .splitTextToSize(text, maxsize, options)
+			// allows you to pass an object with any of the following:
+			// {
+			// 	'fontSize': 12
+			// 	, 'fontStyle': 'Italic'
+			// 	, 'fontName': 'Times'
+			// }
+			// Without these, .splitTextToSize will use current / default
+			// font Family, Style, Size.
+			console.log(lines);
+			pdf.text(0.5, verticalOffset + size / 72, lines)
+
+			verticalOffset += (lines.length + 0.5) * size / 72
+		}
+	}
+
+
+	var string = pdf.output('datauristring');
+
+	$('iframe').attr('src', string);
+
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+ <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      google.charts.load('current', {'packages':['bar']});
+      google.charts.setOnLoadCallback(drawChart);
+      var twr = "{{ data[0]|escape('js') }}";
+      var twr2 = "{{ data[1]|escape('js') }}";
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+          ['Year', 'Homme', 'Femme'],
+          ['2016', parseInt(twr), parseInt(twr2)]
+          
+        ]);
+
+        var options = {
+          chart: {
+            title: 'Company Performance',
+            subtitle: 'Sales, Expenses, and Profit: 2014-2017',
+          }
+        };
+
+        var chart = new google.charts.Bar(document.getElementById('columnchart_material'));
+
+        chart.draw(data, options);
+      }
+    </script>
+
+
+
+{% if data is defined %}
+  <center><h1>Quelques stats(homme/femme):</h1>
+    <div id="columnchart_material" style="width: 900px; height: 500px;"></div>
+  </center>
+{% endif %}
+   {% endblock %}

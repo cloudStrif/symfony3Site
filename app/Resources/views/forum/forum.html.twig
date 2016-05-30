@@ -1,0 +1,144 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+        <div class="container-fluid">
+
+        </div>
+<div class="row" style="overflow-y:scroll; height: 750px;">
+
+
+        <!-- afficher les themes -->
+
+    {% if themes is defined %}
+
+        <center><h1 style="display: inline"> Themes </h1></center>
+        <ul class="list-group">
+        {% for t in themes%}
+            <li class="list-group-item">
+                <span class="badge">{{ t.categorie }}</span>
+                <a href="/forum/{{ t.id }}/sujet">{{ t.nom }}</a>
+            </li>
+      {% endfor %}
+        </ul>
+    {% endif %}
+        <!-- afficher les sujet de discussions -->
+    {% if sujets is defined %}
+
+        <center><h1 style="display: inline"> Sujet </h1></center>
+
+      <table class="table table-striped" >
+  <thead>
+    <tr>
+      <th>Nom</th>
+      <th>themes</th>
+      <th>créer par </th>
+      <th>date</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for s in sujets %}
+        {% if loop.index is divisibleby(2) %}
+        <tr style="background:rgb(51,152,203)">
+          <td ><a href="/forum/theme/{{ s.id }}/message" style="color: white"> {{ s.nom }} </a></td>
+          <td style="color: white">{{ theme.nom }}</td>
+          <td style="color: white">{{ s.user }}</td>
+          <td style="color: white">{{ s.dateCreation|date('F j, Y')}}</td>
+        </tr>
+        {% else %}
+          <tr>
+          <td ><a href="/forum/theme/{{ s.id }}/message" style="color: rgb(51,152,203)"> {{ s.nom }} </a></td>
+          <td style="color: rgb(51,152,203)">{{ theme.nom }}</td>
+          <td style="color: rgb(51,152,203)">{{ s.user }}</td>
+          <td style="color: rgb(51,152,203)">{{ s.dateCreation|date('F j, Y')}}</td>
+        </tr>
+        {% endif %}
+      {% endfor %}
+    <tr>
+        {{form_start(form)}}
+        <td class="text-justify" style="color: rgb(51,152,203);width: 400px;">{{ form_widget(form.nom, {'attr': {'class': 'form-control'}}) }}</td>
+        <td style="color: rgb(51,152,203)">{{ theme.nom }} </td>
+        <td style="color: rgb(51,152,203)">{{ pseudo }}</td>
+        <td style="color: rgb(51,152,203)">{{ now|date("F jS \\a\\t g:ia")}}</td>
+        {{form_end(form)}}
+    </tr>
+
+  </tbody>
+</table>
+    {% endif %}
+        <!-- afficher les messages -->
+        {% if messages is defined %}
+
+            <center><h1 style="display: inline"> Sujet </h1></center>
+            {% set i = 1 %}
+            <h1> messages </h1>
+            <table class="table table-striped" >
+                <thead>
+                <tr>
+                    <th>Contenu</th>
+                    <th>Sujet </th>
+                    <th>créer par </th>
+                    <th>date</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for m in messages %}
+                    {% if loop.index is divisibleby(2) %}
+                        <tr style="background:rgb(51,152,203)">
+                            <td class="text-justify" style="color: white; width: 400px;">{{ m.contenu }}</td>
+                            <td style="color: white">{{ sujet.nom }}</td>
+                            <td style="color: white">{{ m.user }}</td>
+                            <td style="color: white">{{ m.dateCreation|date("F jS \\a\\t g:ia")}}</td>
+                            {% if app.session.get('moderateur') %}
+                            <td>
+                                <a href="/forum/{{ sujet.id }}/{{ m.id }}" class="btn btn-danger glyphicon glyphicon-remove"></a>
+                            </td>
+                            {%  endif %}
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td class="text-justify" style="color: rgb(51,152,203);width: 400px;">{{ m.contenu }}</td>
+                            <td style="color: rgb(51,152,203)">{{ sujet.nom }} </td>
+                            <td style="color: rgb(51,152,203)">{{ m.user }}</td>
+                            <td style="color: rgb(51,152,203)">{{ m.dateCreation|date("F jS \\a\\t g:ia")}}</td>
+                            {% if app.session.get('moderateur') %}
+                                <td>
+                                    <a href="/forum/{{ sujet.id }}/{{ m.id }}" class="btn btn-danger glyphicon glyphicon-remove"></a>
+                                </td>
+                            {%  endif %}
+                        </tr>
+
+
+                    {% endif %}
+                {% endfor %}
+                <tr>
+                    {{form_start(form)}}
+                    <td class="text-justify" style="color: rgb(51,152,203);width: 400px;">{{ form_widget(form.contenu, {'attr': {'class': 'form-control'}}) }}</td>
+                    <td style="color: rgb(51,152,203)">{{ sujet.nom }} </td>
+                    <td style="color: rgb(51,152,203)">{{ pseudo }}</td>
+                    <td style="color: rgb(51,152,203)">{{ now|date("F jS \\a\\t g:ia")}}</td>
+
+                    {{form_end(form)}}
+                </tr>
+                </tbody>
+            </table>
+        {% endif %}
+
+
+
+  </div>
+  
+
+{% endblock %}
+
+{% block stylesheets %}
+<style>
+  .col-md-10{
+  
+    opacity: 0.9;
+  }
+    
+</style>
+{% endblock %}
+

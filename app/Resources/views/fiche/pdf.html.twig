@@ -1,0 +1,155 @@
+
+
+
+{% block stylesheets %}
+
+<link rel="stylesheet" type="text/css" href="{{asset('pdf/examples/css/smoothness/jquery-ui-1.8.17.custom.css')}}">
+<link rel="stylesheet" type="text/css" href="{{asset('pdf/examples/css/main.css')}}">
+{% endblock %}
+
+{% block javascripts %}
+
+<script type="text/javascript" src="{{asset('pdf/examples/js/jquery/jquery-1.7.1.min.js')}}"></script>
+<script type="text/javascript" src="{{asset('pdf/examples/js/jquery/jquery-ui-1.8.17.custom.min.js')}}"></script>
+<script type="text/javascript" src="{{asset('pdf/jspdf.js')}}"></script>
+<script type="text/javascript" src="{{asset('pdf/libs/FileSaver.js/FileSaver.js')}}"></script>
+<script type="text/javascript" src="{{asset('pdf/libs/BlobBuilder.js/BlobBuilder.js')}}"></script>
+
+<script type="text/javascript" src="{{asset('pdf/plugins/addimage.js')}}"></script>
+
+<script type="text/javascript" src="{{asset('pdf/plugins/standard_fonts_metrics.js')}}"></script>
+<script type="text/javascript" src="{{asset('pdf/plugins/split_text_to_size.js')}}"></script>
+<script type="text/javascript" src="{{asset('pdf/plugins/from_html.js')}}"></script>
+<script type="text/javascript" src="{{asset('pdf/examples/js/basic.js')}}"></script>
+<script>
+  $(function() {
+  $("#accordion-basic, #accordion-text, #accordion-graphic").accordion({
+  autoHeight: false,
+  navigation: true
+  });
+  $( "#tabs" ).tabs();
+  $(".button").button();
+  });
+</script>
+<script>
+  $(document).ready(function() {
+  var d = new Date();
+  var n = d.toString();
+  var twr = "{{ data[0]|escape('js') }}";
+  var twr1 = "{{ data[1]|escape('js') }}";
+  var twr2 = "{{ data[2]|escape('js') }}";
+  var twr3 = "{{data[3]|date('F j, Y')}}";
+  var twr4 = "{{data[4]|date('F j, Y')}}";
+  var twr5 = "{{ data[5]|escape('js') }}";
+  var twr6 = "{{ data[6]|escape('js') }}";
+  var twr7 = "{{ data[7]|escape('js') }}";
+
+  var twr8 = "{{ data[8]|escape('js') }}";
+  var twr9 = "{{ data[9]|escape('js') }}";
+  var twr10 = "{{ data[10]|escape('js') }}";
+
+  var twr11 = "{{ data[11]|escape('js') }}";
+  var twr12 = "{{ data[12]|escape('js') }}";
+  var twr13 = "{{ data[13]|escape('js') }}";
+
+  var twr14 = "{{ data[14]|escape('js') }}";
+  var twr15 = "{{ data[15]|escape('js') }}";
+  var twr16 = "{{ data[16]|escape('js') }}";
+  var twr17 = "{{ data[17]|escape('js') }}";
+   var twr18 = "{{ sh.nom|escape('js') }}";
+   var twr19 = "{{ sh.prenom|escape('js') }}";
+  var pdf = new jsPDF('p','in','letter')
+  , sizes = [12, 16, 20]
+  , fonts = [ ['Times','Italic']]
+  , font, size, lines
+  , margin = 0.5 // inches on a 8.5 x 11 inch sheet.
+  , verticalOffset = margin
+  , loremipsum = '  ENTREPRISE :BNW FRANCE -ile de france- \n  142 rue Albert Maurice \n  France-Ile de France-75013'
+  +'\n  Etablissement principale : ROCKENCOURT\nPresident directeur general :M.Henri'
+
+  // Margins:
+  pdf.setDrawColor(0, 0, 0)
+  .setLineWidth(1/72)
+  .line(margin, margin, margin, 11 - margin)
+  .line(8.5 - margin, margin, 8.5-margin, 11-margin)
+
+  // the 3 blocks of text
+  pdf.setDrawColor(0,0, 0)
+  .setLineWidth(1/72)
+  .line(0.5, 0.5, 8, 0.5)
+  //Delimitor 
+  /* pdf.setDrawColor(0,0, 0)
+  .setLineWidth(1/72)
+  .line(0.5, 1.3, 3.9, 1.3)
+  pdf.setDrawColor(0,0, 0)
+  .setLineWidth(1/72)
+  .line(3.9, 1.3, 3.9, 0.5)		
+  */
+  pdf.rect(0.5, 0.5, 3.3, 1);
+  pdf.rect(3.8, 0.5 ,4.2,1);
+  
+  pdf.rect(0.5, 1.5, 7.5, 1);
+  pdf.text(5, 1, 'Fiche de Paie BMW');
+  pdf.text(4.2, 1.3, 'Membre:  '+twr1+' '+twr2);
+  pdf.text(4.2, 0.7, 'Naissance:  '+twr3);
+  pdf.text(0.5, 2, 'entre en Entreprise le :   '+twr4);
+  pdf.text(0.5, 2.4, 'Type de contrat :'+twr5);
+  pdf.text(5, 2.4, 'Durée de contrat :'+twr6);
+  pdf.text(1.5, 1.7, 'Fait le :'+d);
+  
+  pdf.rect(0.5, 2.5, 7.5, 5);
+  pdf.rect(0.5, 2.5,2, 5);
+  pdf.rect(2.5,2.5,2,5);
+  pdf.rect(4.5,2.5,2,5);
+  pdf.text(1.2, 2.8, 'Rubriques:');
+  pdf.text(0.5, 2.8+1, 'assurance maladie           -'+twr8+'%                  '+twr14+'  euros               '+twr11); 
+  pdf.text(0.5, 2.8+2, 'assurance chomage          -'+twr9+'%               '+twr15+'  euros             '+twr12); 
+  pdf.text(0.5, 2.8+3, 'Taxe apprentissage        -'+twr10+'%                    '+twr16+'  euros               '+twr13); 
+  pdf.text(3.2, 2.8, 'Taux:');
+  pdf.text(3.2+2, 2.8, 'A payer:');
+  pdf.text(3.2+3.5, 2.8, 'Charges:'); 
+  pdf.text(1, 9, 'Pour un total:   '+twr17+"\n\nSuperieur :"+twr18 + " "+twr19);
+  pdf.text(1, 10, 'Votre salaire Brut: '+twr+ "euros");
+  for (var i in fonts){
+  if (fonts.hasOwnProperty(i)) {
+  font = fonts[i]
+  size = sizes[i]
+
+  lines = pdf.setFont(font[0], font[1])
+  .setFontSize(size)
+  .splitTextToSize(loremipsum, 7.5)
+  // Don't want to preset font, size to calculate the lines?
+  // .splitTextToSize(text, maxsize, options)
+  // allows you to pass an object with any of the following:
+  // {
+  // 	'fontSize': 12
+  // 	, 'fontStyle': 'Italic'
+  // 	, 'fontName': 'Times'
+  // }
+  // Without these, .splitTextToSize will use current / default
+  // font Family, Style, Size.
+  console.log(lines);
+  pdf.text(0.5, verticalOffset + size / 72, lines)
+
+  verticalOffset += (lines.length + 0.5) * size / 72
+  }
+  }
+
+
+  var string = pdf.output('datauristring');
+
+  $('iframe').attr('src', string);
+
+  });
+</script>	
+
+{% endblock %}
+
+{% block body %}
+
+<center>
+  <iframe frameborder="0" width="1000" height="600"></iframe>
+</center>
+
+
+{% endblock %}

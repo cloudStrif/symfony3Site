@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      google.charts.load("current", {packages:["corechart"]});
+      google.charts.setOnLoadCallback(drawChart);
+      var twr = "{{ data[0]|escape('js') }}";
+      var twr2 = "{{ data[1]|escape('js') }}";
+      var twr3  = "{{ data[2]|escape('js') }}";
+    var twr4  = "{{ data[3]|escape('js') }}";
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+          ['Task', 'Hours per Day'],
+          [' CDI',   parseInt(twr)],
+          ['CDD',   parseInt(twr2)],
+          ['sta',   parseInt(twr3)],
+         ['autres',   parseInt(twr4)],
+        ]);
+
+        var options = {
+          title: 'Ordre de grandeurs des salaires',
+          is3D: true,
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('piechart_3d'));
+        chart.draw(data, options);
+      }
+    </script>
+    
+{% if data is defined %}
+  <center><h1>Quelques stats(Les salaires actuels):</h1>
+   <div id="piechart_3d" style="width: 900px; height: 500px;"></div>
+  </center>
+{% endif %}
+
+ {% endblock %}

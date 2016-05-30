@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+{% if salarie is defined %}
+	<div class="row">
+		<div class="col-md-1"></div>
+		<div class="col-md-10">
+		  <h1>Mon Compte</h1>		  
+			  <ul class="list-inline">
+			  	<li><h3>{{salarie.nom}}</h3></li>
+			  	<li><h3>{{salarie.prenom}}</h3></li>
+			  </ul>
+			  <p></p>
+			  <p>Date de Naissance : {{ salarie.dateNaissance|date('F j, Y, g:i a') }}</p>
+			  <p>Superieur Hierarchique : {{ sh.nom }} {{ sh.prenom }}</p>
+			  <p>Date d'entre : {{ salarie.dateEntre|date('F j, Y, g:i a') }}</p>
+			  <p>Type de Contrat : {{ salarie.typeContrat }}</p>
+			  <p>Duree du Contrat : {{ salarie.DureeContrat }}</p>
+			  <p>Salaire : {{ salarie.salaire }}</p>
+		</div>
+		<div class="col-md-1"></div>
+	</div>
+{% endif %}
+{% endblock %}
+
+{% block stylesheets %}
+<style type="text/css">
+	.col-md-10{
+		background-color: rgb(51,152,203);
+		opacity: 0.9;
+	}
+	h1,ul li, p, a {
+		color:  white;
+	}
+	
+</style>
+{% endblock %}

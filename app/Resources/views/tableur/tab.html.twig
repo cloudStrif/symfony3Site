@@ -1,0 +1,190 @@
+<html>
+  <head>
+      <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--<link rel="icon" href="https://getbootstrap.com/favicon.ico">
+  --><title>Bmw France</title>
+    <link rel="stylesheet" href="{{asset('bundles/framework/body.css')}}" />
+      <!--<link rel="stylesheet" href="{{asset('bundles/framework/exception.css')}}" />
+      <link rel="stylesheet" href="{{asset('bundles/framework/structure.css')}}" />
+    <link rel="stylesheet" href="{{asset('css/app.css')}}" />
+      <link rel="stylesheet" href="{{asset('css/bootstrap.css')}}" /-->
+      <link rel="stylesheet" href="{{asset('css/bootstrap.min.css')}}" />
+      <!--link rel="stylesheet" href="{{asset('css/bootstrap-datetimepicker.min.css')}}" />
+      <link rel="stylesheet" href="{{asset('css/bootstrap-theme.css')}}" />
+      <link rel="stylesheet" href="{{asset('css/bootstrap-theme-min.css')}}" /-->
+      <link href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+  </head>
+  <body>
+    <nav class="navbar navbar-default">
+        <!--img src="/bundles/images/bannierebmw.gif" id="banniere"-->
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#" style="color: rgb(51,152,203); background: white;" >Bmw France  </a>
+          </div>
+          <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+              <li><a href="/" class="glyphicon glyphicon-home" style="color: white" ></a></li>
+                {% if app.session.get('pseudo') %}
+                <li><a href="#" style="color: white">Contact</a></li>
+                <li><a href="#" style="color: white">A propos</a></li>
+                <li><a href="/account/view" style="color: white">Mon Compte</a></li>
+                <li><a href="/stats/stat" style="color: white">Statistiques</a></li>
+                <li><a href="/tableur/stat4" style="color: white">Tableur</a></li>
+                <li><a href="/fiche/stat5" style="color: white">Ma fiche de paie</a></li>
+              <li><a href="/forum/themes" style="color: white">Forum</a></li>
+                    <li><a href="/formation" style="color: white">formation</a></li>
+                <li><a href="/chat/chat1" style="color: white">Mini Chat</a></li>
+                    <li><a href="/search" style="color: white">Recherche</a></li>
+                {% endif %}
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+              {% if app.session.get('pseudo') %}
+              <li ><a href="#" style="color: white">{{app.session.get('pseudo')}}</a></li>
+              <li ><a href="/log/logout" class="glyphicon glyphicon-log-out" style="color: white"></a></li>
+              {% endif %}
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div><!--/.container-fluid -->
+      </nav>
+
+
+<script src="{{asset('/tab/jquery-1.10.2.js')}}"></script>
+<script src="{{asset('/tab/handsontable.full.js')}}"></script>
+<link rel="stylesheet" media="screen" href="{{asset('/tab/handsontable.full.css')}}">
+
+                        
+<script src="{{asset('/tab/lodash.js')}}"></script>
+
+<script src="{{asset('/tab/underscore.string.js')}}"></script>
+
+<script src="{{asset('/tab/moment.js')}}"></script>
+
+<script src="{{asset('/tab/numeral.js')}}"></script>
+
+<script src="{{asset('/tab/numeric.js')}}"></script>
+
+<script src="{{asset('/tab/md5.js')}}"></script>
+
+<script src="{{asset('/tab/jstat.js')}}"></script>
+
+
+<script src="{{asset('/tab/formula.js')}}"></script>
+
+<script src="{{asset('/tab/parser.js')}}"></script>
+
+<script src="{{asset('/tab/ruleJS.js')}}"></script>
+
+<script src="{{asset('/tab/handsontable.formula.js')}}"></script>
+
+<link rel="stylesheet" media="screen" href="{{asset('/tab/samples.css')}}">
+
+
+
+<script>
+$(document).ready(function () {
+
+  var data1 =[
+    [2000, 3000, '=SUM(A1,B1)','','','','','','','','','','','','','','','','',''],
+    [2001, 3001, '=SUM(A2,B2)'],
+    [2002, 3002, '=SUM(A3,B3)'],
+    [2003, 3003, '=SUM(A4,B4)'],
+    ['','','','','','','','','','','','','','','','','','','',''],
+    ['','','','','','','','','','','','','','','','','','','',''],
+    ['','','','','','','','','','','','','','','','','','','',''],
+    ['','','','','','','','','','','','','','','','','','','',''],
+    ['','','','','','','','','','','','','','','','','','','',''],
+    ['','','','','','','','','','','','','','','','','','','',''],
+    ['','','','','','','','','','','','','','','','','','','',''],
+    ['','','','','','','','','','','','','','','','','','','',''],
+    ['','','','','','','','','','','','','','','','','','','',''],
+    ['','','','','','','','','','','','','','','','','','','',''],
+    ['','','','','','','','','','','','','','','','','','','',''],
+    ['','','','','','','','','','','','','','','','','','','',''],
+    ['','','','','','','','','','','','','','','','','','','',''],
+    ['','','','','','','','','','','','','','','','','','','',''],
+    ['','','','','','','','','','','','','','','','','','','',''],
+    ['','','','','','','','','','','','','','','','','','','',''],
+   
+  ];
+  
+  var container1 = $('#example1');
+  
+  container1.handsontable({
+    data: data1,
+    columnSorting: true,
+    minSpareRows: 1,
+    colHeaders: true,
+    rowHeaders: true,
+    contextMenu: true,
+    manualColumnResize: true,
+    formulas: true
+  });
+  
+  var container2 = $('#example2');
+   
+  function bindDumpButton() {
+      $('body').on('click', 'button[name=dump]', function () {
+        var dump = $(this).data('dump');
+        var $container = $(dump);
+        console.log('data of ' + dump, $container.handsontable('getData'));
+      });
+    }
+  bindDumpButton();
+
+});
+</script>
+  
+
+<center><h1>Service de Tableur type exel</h1></center>
+</br>
+</br>
+<div id="example1" class="handsontable"></div>
+
+  </body>
+
+</html>
+<style>
+    body {
+      padding-bottom: 0px;
+    }
+    #body-container {
+      background: white;
+      /*
+      background-image:  url("/bundles/images/bmwbg2bis.jpg");
+      */
+      height: 800px;
+    }
+    #banniere{
+        width: 100%;
+    }
+    .navbar {
+      margin-bottom: 0px;
+    }
+    nav div{
+      background-color: rgb(51,152,203);
+    }
+    /*
+    footer,.modal-body{
+        background: rgb(51,152,203);
+    }
+    */
+    .panel-footer {
+      background: rgb(51,152,203);
+      padding-bottom: 0;
+      margin-bottom: 0;
+    }
+    .panel-footer a {
+      color: white;
+    }
+
+    
+</style>

@@ -1,0 +1,175 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>{% block title %}Bmw France{% endblock %}</title>
+
+        {% block stylesheets %}
+        <link rel="stylesheet" href="{{ asset('css/bootstrap.css') }}" />
+        <link rel="stylesheet" href="{{ asset('css/bootstrap.css') }}" />
+        <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}" />
+        <link rel="stylesheet" href="{{ asset('css/bootstrap-theme.css') }}" />
+        <link rel="stylesheet" href="{{ asset('css/bootstrap-datetimepicker.min.css') }}" />
+        <link rel="stylesheet" href="{{ asset('css/main.css') }}" />
+        <link rel="stylesheet" href="{{ asset('css/bootstrap-theme.min.css') }}" />
+        <link href="https://getbootstrap.com/examples/navbar/navbar.css" rel="stylesheet">
+        <link href="https://getbootstrap.com/assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+        <link href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet">
+        {% endblock %}
+        <!--link href="https://getbootstrap.com/examples/navbar/navbar.css" rel="stylesheet">
+        <link href="https://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link href="https://getbootstrap.com/assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+        
+
+        -->
+              {% block javascripts %}
+        <script src="{{ asset('js/jquery.min.js') }}"></script>
+        <script src="{{ asset('jquery/jquery-2.2.0.min.js') }}"></script>
+        
+        <script src="https://getbootstrap.com/assets/js/ie-emulation-modes-warning.js"></script>
+        <script src="https://getbootstrap.com/dist/js/bootstrap.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+        <script src="https://getbootstrap.com/dist/js/bootstrap.min.js"></script>
+        <script src="https://getbootstrap.com/assets/js/ie10-viewport-bug-workaround.js"></script>
+        {% endblock %}
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" /-->
+    </head>
+    <body>
+    <nav class="navbar navbar-default">
+    <img src="/bundles/images/bannierebmw.gif" id="banniere">
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">Project name</a>
+          </div>
+          <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+              <li class="active"><a href="#">Home</a></li>
+              <li><a href="#">About</a></li>
+              <li><a href="#">Contact</a></li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                  <li><a href="#">Action</a></li>
+                  <li><a href="#">Another action</a></li>
+                  <li><a href="#">Something else here</a></li>
+                  <li role="separator" class="divider"></li>
+                  <li class="dropdown-header">Nav header</li>
+                  <li><a href="#">Separated link</a></li>
+                  <li><a href="#">One more separated link</a></li>
+                </ul>
+              </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+              <li class="active"><a href="./">Default <span class="sr-only">(current)</span></a></li>
+              <li><a href="../navbar-static-top/">Static top</a></li>
+              <li><a href="../navbar-fixed-top/">Fixed top</a></li>
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div><!--/.container-fluid -->
+      </nav>
+        
+      
+    </body>
+<style>
+    #banniere{
+        width: 100%;
+    }
+    body, { 
+        /*background-image: url("/bundles/images/bg2.jpg");
+        background: #F5F5F5;*/
+        background-image: url("/bundles/images/bmwbg2.jpg"); 
+    }
+    
+    /*#cbody{
+    
+    height: 600px;
+    background-image:  url("/bundles/images/bmwbg.jpg");
+    /*background: #DCDCDC;
+
+    }*/
+    #menubar{
+        background: #191970;
+    }
+    footer,.modal-body{
+        background: #191970;
+    }
+    /*#accountbg {
+        border: bla
+        background: white;
+        opacity: 0.2;
+        
+    } 
+    #cote{
+        background-color: black;
+        opacity: 0.5;
+        
+    }*/
+    ul li, p,h3 {
+        color:  #191970;
+        opacity: 1;
+
+    }
+    h1, footer li a,label{
+        color: white;
+        opacity: 1;
+    }
+    #profil{
+        width: 150px;
+        height: 150px;
+        margin: 0 auto;
+    }
+</style>
+        
+</html>
+
+
+
+
+<!--div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+  <!-- Indicators ->
+  <ol class="carousel-indicators">
+    <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+    <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+    <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+    <li data-target="#carousel-example-generic" data-slide-to="3"></li>
+    <li data-target="#carousel-example-generic" data-slide-to="4"></li>
+    <li data-target="#carousel-example-generic" data-slide-to="5"></li>
+  </ol>
+
+  <!-- Wrapper for slides ->
+  <div class="carousel-inner" role="listbox">
+    <div class="item active">
+        <img class=".img-rounded" src="/bundles/images/bmwimg/1.jpg" alt="ford">    
+    </div>
+    <div class="item ">
+        <img class=".img-rounded" src="/bundles/images/bmwimg/2.jpg" alt="ford">    
+    </div>
+    <div class="item ">
+        <img class=".img-rounded" src="/bundles/images/bmwimg/3.jpg" alt="ford">    
+    </div>
+    <div class="item ">
+        <img class=".img-rounded" src="/bundles/images/bmwimg/4.jpg" alt="ford">    
+    </div>
+    <div class="item ">
+        <img class=".img-rounded" src="/bundles/images/bmwimg/5.jpg" alt="ford">    
+    </div>
+  </div>
+
+  <!-- Controls ->
+  <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+    <span class="sr-only">Previous</span>
+  </a>
+  <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+    <span class="sr-only">Next</span>
+  </a>
+  </div-->

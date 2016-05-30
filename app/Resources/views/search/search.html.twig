@@ -1,0 +1,91 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="page-header"></div>
+
+    <div class="jumbotron">
+        <h1 class="page-header">Entrez votre recherche</h1>
+        <small>(formation, salarie, et thèmes ou sujet de forum) </small>
+        {{ form_start(form) }}
+        <div class="col-sm-8">
+            <div class="form-group">
+                <div class="input-group">
+                    <!--input type="text" placeholder="recherche" name="s" class="form-control"-->
+                    {{ form_widget(form.search, {'attr': {'class': 'form-control'}}) }}
+                    <div class="input-group-btn">
+                        {{ form_widget(form.chercher, {'attr': {'class': 'btn btn-inverse right-rounded'}}) }}
+                        <!--button type="submit" class="btn btn-inverse right-rounded">Chercher</button-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    {{ form_end(form) }}
+    </div>
+    {% if search is defined %}
+        <div class="well">
+            <h3>Resultat pour : {{ search }}</h3>
+        </div>
+    {% endif %}
+
+    <!-- Affiche les formations trouvées -->
+    {% if formations is defined and formations|length > 0 %}
+    <div class="panel panel-primary">
+        <div class="panel-heading"><h3>Formation</h3></div>
+        <div class="panel-body">
+            <div class="list-group">
+            {% for f in formations  %}
+                    <a href="#" class="list-group-item">{{ f.contenu }}</a>
+            {% endfor %}
+            </div>
+        </div>
+    </div>
+    {% endif %}
+    <!-- Affiche les salaries trouvés -->
+    {% if salaries is defined and salaries|length > 0 %}
+        <div class="panel panel-info">
+            <div class="panel-heading"><h3>Salarie</h3></div>
+            <div class="panel-body">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>Nom</th> <th>Prenom</th> <th>date de Naissance</th> <th>Sexe</th>
+                    </tr>
+                    {% for s in salaries %}
+                        <tr>
+                            <td>{{ s.nom }}</td>
+                            <td>{{ s.prenom }}</td>
+                            <td>{{ s.dateNaissance|date("F jS") }}</td>
+                            <td>{{ s.sexe }}</td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+    {% endif %}
+    <!-- Affiche les themes trouvés -->
+    {% if themes is defined and themes|length > 0 %}
+        <div class="panel panel-success">
+            <div class="panel-heading"><h3>Thèmes</h3></div>
+            <div class="panel-body">
+                <div class="list-group">
+                    {% for t in themes  %}
+                        <a href="/forum/{{ t.id }}/sujet" class="list-group-item">{{ t.nom }}</a>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    {% endif %}
+    <!-- Affiche les sujets trouvés-->
+    {% if sujets is defined and sujets|length > 0 %}
+        <div class="panel panel-warning">
+            <div class="panel-heading"><h3>Sujets</h3></div>
+            <div class="panel-body">
+                <div class="list-group">
+                    {% for s in sujets  %}
+                        <a href="/forum/theme/{{ s.id }}/message" class="list-group-item">{{ s.nom }}</a>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}

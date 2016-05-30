@@ -1,0 +1,233 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--<link rel="icon" href="https://getbootstrap.com/favicon.ico">
+  --><title>Bmw France</title>
+    <link rel="stylesheet" href="{{asset('bundles/framework/body.css')}}" />
+    <!--<link rel="stylesheet" href="{{asset('bundles/framework/exception.css')}}" />
+      <link rel="stylesheet" href="{{asset('bundles/framework/structure.css')}}" />
+    <link rel="stylesheet" href="{{asset('css/app.css')}}" />
+      <link rel="stylesheet" href="{{asset('css/bootstrap.css')}}" /-->
+    <link rel="stylesheet" href="{{asset('css/bootstrap.min.css')}}" />
+    <!--link rel="stylesheet" href="{{asset('css/bootstrap-datetimepicker.min.css')}}" />
+      <link rel="stylesheet" href="{{asset('css/bootstrap-theme.css')}}" />
+      <link rel="stylesheet" href="{{asset('css/bootstrap-theme-min.css')}}" /-->
+    <link href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet">
+    <link href="http://blog.niap3d.com/calendrier-javascript/css/default_blue.css" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+
+
+
+    {% block stylesheets %}{% endblock %}
+</head>
+
+<body>
+<script src="{{asset('jquery/jquery-2.2.3.min')}}"></script>
+
+<script src="http://blog.niap3d.com/calendrier-javascript/js/jsSimpleDatePickrMin.js"></script>
+<nav class="navbar navbar-default">
+    <!--img src="/bundles/images/bannierebmw.gif" id="banniere"-->
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#" style="color: rgb(51,152,203); background: white;" >Bmw France  </a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li><a href="/" class="glyphicon glyphicon-home" style="color: white" ></a></li>
+                <li><a href="#" style="color: white">Contact</a></li>
+                <li><a href="#" style="color: white">A propos</a></li>
+                {% if app.session.get('pseudo') %}
+                    <li><a href="/account/view" style="color: white">Mon Compte</a></li>
+                    <li><a href="/stats/stat" style="color: white">Statistiques</a></li>
+                    <li><a href="/tableur/stat4" style="color: white">Tableur</a></li>
+                    <li><a href="/fiche/stat5" style="color: white">Ma fiche de paie</a></li>
+                    <li><a href="/forum/themes" style="color: white">Forum</a></li>
+                    <li><a href="/formation" style="color: white">formation</a></li>
+                    <li><a href="/chat/chat1" style="color: white">Mini Chat</a></li>
+                    <li><a href="/search" style="color: white">Recherche</a></li>
+                {% endif %}
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                {% if app.session.get('pseudo') %}
+                    <li ><a href="#" style="color: white">{{app.session.get('pseudo')}}</a></li>
+                    <li ><a href="/log/logout" class="glyphicon glyphicon-log-out" style="color: white"></a></li>
+                {% endif %}
+            </ul>
+        </div><!--/.nav-collapse -->
+    </div><!--/.container-fluid -->
+</nav>
+
+<!-- Main component for a primary marketing message or call to action -->
+<div id="body-container">
+    <div class="container">
+        <script src="https://code.jquery.com/jquery-2.2.3.js"></script>
+        <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+        {% if app.session.get('pseudo') %}
+            {% block body %}{% endblock %}
+        {% else %}
+            {% if form is defined and form.pseudo is defined and  not app.session.get('pseudo')   %}
+            {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
+
+            <div class="row">
+                <div class="col-md-3"></div>
+                <!-- formulaire de connexion -->
+                <div class="col-md-6 col-sm-4">
+                    <h3>Veuillez-vous authentifier</h3>
+                    <div class="row">
+                        <div class="form-group" id="pseudo">
+                            {{ form_label(form.pseudo, "Pseudo", {'label_attr': {'class': 'col-sm-2 control-label'}}) }}
+                            <div class="col-md-6 ui-widget">
+                                {{ form_widget(form.pseudo, {'attr': {'class': 'form-control ui-widget'}}) }}
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            {{ form_label(form.mdp, "Mot de passe", {'label_attr': {'class': 'col-sm-2 control-label'}}) }}
+                            <div class="col-md-6">
+                                {{ form_widget(form.mdp, {'attr': {'class': 'form-control'}}) }}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                {{ form_label(form.connexion, "connexion", {'label_attr': {'class': 'col-sm-offset-2 col-sm-10'}}) }}
+                                {{ form_widget(form.connexion, {'attr': {'class': 'btn btn-primary'}}) }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+
+                </div>
+            </div>
+            {{ form_end(form) }}
+        {% endif %}
+            <script>
+                $("#form_pseudo").autocomplete({
+                    source: '/log/test/'
+                });
+            </script>
+        {% endif %}
+        <!-- Modal -->
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg" >
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title" id="myModalLabel">Connexion : </h4>
+                    </div>
+                    <div class="modal-body">
+                        {% if form is defined and form.pseudo is defined and  not app.session.get('pseudo')   %}
+                            {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
+                            <div class="row">
+                                <!-- formulaire de connexion -->
+                                <div class="col-md-6">
+                                    <h1>connexion</h1>
+                                    <div class="row">
+                                        <div class="form-group" id="pseudo">
+                                            {{ form_label(form.pseudo, "Pseudo", {'label_attr': {'class': 'col-sm-2 control-label'}}) }}
+                                            <div class="col-md-6">
+                                                {{ form_widget(form.pseudo, {'attr': {'class': 'form-control'}}) }}
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            {{ form_label(form.mdp, "Mot de passe", {'label_attr': {'class': 'col-sm-2 control-label'}}) }}
+                                            <div class="col-md-6">
+                                                {{ form_widget(form.mdp, {'attr': {'class': 'form-control'}}) }}
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-sm-offset-2 col-sm-10">
+                                                {{ form_label(form.connexion, "connexion", {'label_attr': {'class': 'col-sm-offset-2 col-sm-10'}}) }}
+                                                {{ form_widget(form.connexion, {'attr': {'class': 'btn btn-primary'}}) }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- formulaire d'inscription -->
+                                <div class="col-md-6">
+
+                                </div>
+
+                            </div>
+                            {{ form_end(form) }}
+                        {% endif %}
+
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+        <!-- Fin du modal de connexion -->
+
+    </div> <!-- /container -->
+</div><!-- /body-container -->
+<div class="panel-footer">
+    <p><center>Copyright Mohamed Diallo & Patrick Chen</center></p>
+</div>
+
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="https://getbootstrap.com/dist/js/bootstrap.min.js"></script>
+<script src="https://getbootstrap.com/assets/js/ie10-viewport-bug-workaround.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="{{asset('jquery/jquery-2.2.3.min')}}"></script>
+<script src="{{asset('js/app.js')}}"></script>
+<script src="/lib/CMS/js/site/cookiechoices.js" type="text/javascript"></script>
+
+<!--script src="{{asset('js/bootstrap.js')}}"></script>
+      <script src="{{asset('js/bootstrap.min.js')}}"></script>
+      <script src="{{asset('js/npm.js')}}"></script-->
+
+</body>
+</html>
+<style>
+    body {
+        padding-bottom: 0px;
+    }
+    #body-container {
+        background: white;
+        /*
+        background-image:  url("/bundles/images/bmwbg2bis.jpg");
+        */
+        min-height: 800px;
+    }
+    #banniere{
+        width: 100%;
+    }
+    .navbar {
+        margin-bottom: 0px;
+    }
+    nav div{
+        background-color: rgb(51,152,203);
+    }
+    /*
+    footer,.modal-body{
+        background: rgb(51,152,203);
+    }
+    */
+    .panel-footer {
+        background: rgb(51,152,203);
+        padding-bottom: 0;
+        margin-bottom: 0;
+    }
+    .panel-footer a {
+        color: white;
+    }
+
+
+</style>
